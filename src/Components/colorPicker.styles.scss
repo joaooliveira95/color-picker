@@ -1,0 +1,17 @@
+.color-picker {
+  margin: 1.25rem;
+
+  &__selected-color {
+    margin: 1.25rem 0;
+    height: 10rem;
+  }
+
+  &__input {
+      &--error{
+        color: red;
+        input {
+            color: red;
+        }
+      }
+  }
+}
