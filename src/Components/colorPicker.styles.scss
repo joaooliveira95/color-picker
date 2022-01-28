@@ -1,17 +1,24 @@
 .color-picker {
-  margin: 1.25rem;
+  width: 25rem;
+  margin: 1rem;
 
   &__selected-color {
-    margin: 1.25rem 0;
-    height: 10rem;
+    height: 5rem;
+    width: 100%;
+
+    h1 {
+      background: rgba(255, 255, 255, 0.5);
+      max-width: 15.625rem;
+    }
   }
 
   &__input {
-      &--error{
+    margin-top: 1rem;
+    &--error {
+      color: red;
+      input {
         color: red;
-        input {
-            color: red;
-        }
       }
+    }
   }
 }
