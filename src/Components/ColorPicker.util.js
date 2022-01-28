@@ -1,3 +1,7 @@
+export const CANVAS_SIZE = 320;
+export const CANVAS_COLOR_SELECTOR_HEIGHT = 20;
+export const DEFAULT_COLOR = "#000000";
+
 export const isColorValid = (color) => CSS.supports("color", color);
 
 export const rgbToHex = (r, g, b) => {
