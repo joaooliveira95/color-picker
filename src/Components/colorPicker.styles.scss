@@ -1,24 +1,58 @@
 .color-picker {
-  width: 25rem;
-  margin: 1rem;
+  -webkit-animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  animation: fade-in 1.2s cubic-bezier(0.39, 0.575, 0.565, 1) both;
+  background-color: white;
+  border-radius: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: 20rem;
+
+  #color_canvas {
+    border-radius: 0.2rem 0.2rem 0 0;
+  }
 
   &__selected-color {
+    border-radius: 0 0 0.2rem 0.2rem;
     height: 5rem;
     width: 100%;
 
     h1 {
       background: rgba(255, 255, 255, 0.5);
-      max-width: 15.625rem;
+      border-radius: 0 0.2rem 0.2rem 0;
+      max-width: 10rem;
     }
   }
 
   &__input {
     margin-top: 1rem;
+
+    input {
+      margin-left: 0.5rem;
+    }
+
     &--error {
       color: red;
       input {
         color: red;
       }
     }
+  }
+}
+
+@-webkit-keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
