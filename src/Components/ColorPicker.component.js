@@ -1,34 +1,49 @@
 import cn from "classnames";
-import { CANVAS_SIZE, CANVAS_COLOR_SELECTOR_HEIGHT, isColorValid, readPixelColor, DEFAULT_COLOR } from "./colorPicker.util";
+import {
+  CANVAS_SIZE,
+  CANVAS_COLOR_SELECTOR_HEIGHT,
+  isColorValid,
+  readPixelColor,
+} from "./colorPicker.util";
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import "./colorPicker.styles.scss";
 
 const ColorPicker = ({
-  defaultColor = DEFAULT_COLOR,
+  selectedColor,
+  onSelectColor,
   canvasSize = CANVAS_SIZE,
   canvasColorSelectorHeight = CANVAS_COLOR_SELECTOR_HEIGHT,
 }) => {
   const colorCanvasRef = useRef();
   const colorSelectorCanvasRef = useRef();
-  const [color, setColor] = useState(defaultColor);
-  const [selectedColor, setSelectedColor] = useState(defaultColor);
+  const [color, setColor] = useState(selectedColor);
 
   const buildColorCanvas = () => {
     const currentCanvas = colorCanvasRef?.current;
 
     try {
       // This create a 2D context for the canvas
-      const colorCtx = currentCanvas.getContext("2d"); 
+      const colorCtx = currentCanvas.getContext("2d");
       // Create an horizontal gradient
-      let gradientH = colorCtx.createLinearGradient(0, 0, currentCanvas.width, 0);
+      let gradientH = colorCtx.createLinearGradient(
+        0,
+        0,
+        currentCanvas.width,
+        0
+      );
       gradientH.addColorStop(0, "#fff");
       gradientH.addColorStop(1, color);
       colorCtx.fillStyle = gradientH;
       colorCtx.fillRect(0, 0, currentCanvas.width, currentCanvas.height);
 
       // Create a Vertical Gradient(white to black)
-      let gradientV = colorCtx.createLinearGradient(0, 0, 0, currentCanvas.height);
+      let gradientV = colorCtx.createLinearGradient(
+        0,
+        0,
+        0,
+        currentCanvas.height
+      );
       gradientV.addColorStop(0, "rgba(0,0,0,0)");
       gradientV.addColorStop(1, "#000");
       colorCtx.fillStyle = gradientV;
@@ -45,7 +60,12 @@ const ColorPicker = ({
       // This create a 2D context for the canvas
       const colorCtx = currentCanvas?.getContext("2d");
       // Create an horizontal gradient
-      let gradientH = colorCtx.createLinearGradient(0, 0, currentCanvas.width, 0 );
+      let gradientH = colorCtx.createLinearGradient(
+        0,
+        0,
+        currentCanvas.width,
+        0
+      );
       gradientH.addColorStop(0, "#ff0000");
       gradientH.addColorStop(0.333, "#0000ff");
       gradientH.addColorStop(0.666, "#00ff00");
@@ -71,7 +91,7 @@ const ColorPicker = ({
   const onInputChange = (event) => {
     const { value } = event.target;
     setColor(value);
-    setSelectedColor(value);
+    onSelectColor(value);
     buildColorCanvas();
   };
 
@@ -80,7 +100,7 @@ const ColorPicker = ({
     const hexColor = readPixelColor(event, colorCtx);
 
     if (isColorValid(hexColor)) {
-      setSelectedColor(hexColor);
+      onSelectColor(hexColor);
     }
   };
 
@@ -90,7 +110,7 @@ const ColorPicker = ({
 
     if (isColorValid(hexColor)) {
       setColor(hexColor);
-      setSelectedColor(hexColor);
+      onSelectColor(hexColor);
     }
   };
 
@@ -130,9 +150,10 @@ const ColorPicker = ({
 };
 
 ColorPicker.propTypes = {
-  canvasSize: PropTypes.number,
   canvasSelectorHeight: PropTypes.number,
-  defaultColor: PropTypes.string,
+  canvasSize: PropTypes.number,
+  color: PropTypes.string,
+  onSelectColor: PropTypes.func,
 };
 
 export default ColorPicker;
